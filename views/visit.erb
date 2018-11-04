@@ -4,11 +4,62 @@
 <form action="/visit" method="POST">
 
   <div class="form-group">
-
     <label>Ваше имя</label>
     <input name="username" type="text" class="form-control" placeholder="Имя">
-  
   </div>
+
+
+  <div class="form-group">
+  	<label>Ваш телефонный номер</label>
+  </br>
+  	<input name="phone" type="phone" class="form-control" placeholder="Телефон">
+  </div>
+
+
+  <div class="form-group">
+  	<label>Выберите дату</label>
+  </br>
+  	<input name="date_n_time" type="text" class="form-control" placeholder="Дата и время">
+  </div>
+
+
+<div class="radio">
+  <label>
+    <input type="radio" name="master" value="Генадий" checked>
+    Генайдий
+  </label>
+</div>
+
+<div class="radio">
+  <label>
+    <input type="radio" name="master" value="Дмитрий">
+    Дмитрий
+  </label>
+</div>
+
+<div class="radio">
+  <label>
+    <input type="radio" name="master" value="Елена">
+    Елена
+  </label>
+</div>
+
+<div class="radio">
+  <label>
+    <input type="radio" name="master" value="Любой">
+    Любой из наших мастеров
+  </label>
+</div>
+
+
+<select size="5" name="select">
+    <option disabled>Выберите мастера</option>
+    <option value="Генадий">Генадий</option>
+    <option value="Дмитрий">Дмитрий</option>
+    <option value="Елена">Елена</option>
+    <option selected="Любой">Любой</option>
+   </select></p>
+<input type="submit" value="Отправить">
 
   <button type="submit" class="btn btn-primary">Записаться</button>
 

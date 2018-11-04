@@ -15,6 +15,50 @@ get '/visit' do
 	erb :visit
 end
 
+post '/visit' do	
+	@username = params[:username]
+	@phone = params[:phone]
+	@date_n_time = params[:date_n_time]
+	@master = params[:master]
+	@select = params[:select]
+
+	f = File.open 'public/users.txt', "a"
+	f.write "Имя: #{@username}\nТелефон: #{@phone}\nДата и время: #{@date_n_time}\nМастер: #{@master}\nЕще раз для тупых: #{@select}\n\n\n"
+	f.close
+
+	erb :visit
+end
+
 get '/contacts' do
 	erb :contacts
+end
+
+post '/contacts' do
+	@email = params[:email]
+	@message = params[:message]
+
+	f = File.open 'public/contacts.txt', "a"
+	f.write "Email:\n#{@email}\nСообщение:\n#{@message}\n\n\n"
+	f.close
+
+	erb :contacts
+end
+
+get '/admin' do
+	erb :admin
+end
+
+post '/admin' do
+	@login = params[:login]
+	@password = params[:password]
+
+	if @login == "admin" && @password == "secret"
+		#@logfile = File.open("public/users.txt","r")
+		erb :adminList
+    	#@logfile.close
+    	#send_file 'public/users.txt'
+    else
+		redirect to "/admin"
+	end
+			
 end
