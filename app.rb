@@ -21,9 +21,10 @@ post '/visit' do
 	@date_n_time = params[:date_n_time]
 	@master = params[:master]
 	@select = params[:select]
+	@color = params[:colorpicker]
 
 	f = File.open 'public/users.txt', "a"
-	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}"
+	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
 	f.close
 
 	erb :visit

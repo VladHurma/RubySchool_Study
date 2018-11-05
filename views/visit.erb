@@ -19,7 +19,7 @@
   <div class="form-group">
   	<label>Выберите дату</label>
   </br>
-  	<input name="date_n_time" type="text" class="form-control" placeholder="Дата и время">
+  	<input id="aaa" name="date_n_time" type="text" class="form-control" placeholder="Дата и время">
   </div>
 
 
@@ -60,6 +60,30 @@
     <option selected="Любой">Любой</option>
    </select></p>
 
+
+<div class="form-group">
+   <label>Выберете цвет</label></br>
+  <select id="colorpick" name="colorpicker">
+    <option selected="white">Не красим</option>
+    <option value="#7bd148">Зеленый</option>
+    <option value="#5484ed">Темно синий</option>
+    <option value="#a4bdfc">Голубой</option>
+    <option value="#46d6db">Темно лазурный</option>
+    <option value="#7ae7bf">Светло лазурный</option>
+    <option value="#51b749">Зеленый</option>
+    <option value="#fbd75b">Желтый</option>
+    <option value="#ffb878">Оранжевый</option>
+    <option value="#ff887c">Розовый</option>
+    <option value="#dc2127">Красный</option>
+    <option value="#dbadff">Фиолетовый</option>
+    <option value="#e1e1e1">Серый</option>
+  </select>
+</div>
+
   <button type="submit" class="btn btn-primary">Записаться</button>
 
 </form>
+
+<script type="text/javascript">
+$('#colorpick').simplecolorpicker();
+</script>

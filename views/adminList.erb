@@ -1,3 +1,4 @@
+<h1><strong>Заказы</strong></h1>
 <table class="table table-hover">
   <thead>	
   	<tr>
@@ -7,6 +8,7 @@
   		<th>Дата и время</th>
   		<th>Мастер</th>
   		<th>Подтверждаем мастера</th>
+      <th>Цвет покраски волос</th>
   	</tr>
   </thead>
 
@@ -26,10 +28,10 @@
 </table>
 
 </br></br></br>
-
+<h1><strong>Сообщения</strong></h1>
 <% @seclog.each_line do |line| %>
 <% if line.include? "@mail.ru" %>
-	<a href="mailto:#"><%= line %></a></br>
+	<a href="mailto:#"><%= line %></a></br></br>
 	<% else %>
 	<strong><%= line %></strong></br>
 <% end %>
