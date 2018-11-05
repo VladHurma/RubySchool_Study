@@ -1,3 +1,36 @@
-<%= send_file 'public/users.txt' %>
+<table class="table table-hover">
+  <thead>	
+  	<tr>
+  		<th>#</th>
+  		<th>Имя</th>
+  		<th>Телефон</th>
+  		<th>Дата и время</th>
+  		<th>Мастер</th>
+  		<th>Подтверждаем мастера</th>
+  	</tr>
+  </thead>
 
-<%#= @logfile %>
+  	<tbody>
+  	<tr>
+  	<% i = 0 %>
+  		<% @logfile.each_line do |line| %>
+  			<% if line.strip == "Z" %>
+  			<% i+= 1 %>
+  			</tr></tr><th scope="row"><%= i %></th>
+  			<% else %>
+  			<td><%= line %></td>
+  			<% end %>
+		<% end %>
+ 		</tr>
+	</tbody>
+</table>
+
+</br></br></br>
+
+<% @seclog.each_line do |line| %>
+<% if line.include? "@mail.ru" %>
+	<a href="mailto:#"><%= line %></a></br>
+	<% else %>
+	<strong><%= line %></strong></br>
+<% end %>
+<% end %>

@@ -23,7 +23,7 @@ post '/visit' do
 	@select = params[:select]
 
 	f = File.open 'public/users.txt', "a"
-	f.write "Имя: #{@username}\nТелефон: #{@phone}\nДата и время: #{@date_n_time}\nМастер: #{@master}\nЕще раз для тупых: #{@select}\n\n\n"
+	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}"
 	f.close
 
 	erb :visit
@@ -53,10 +53,9 @@ post '/admin' do
 	@password = params[:password]
 
 	if @login == "admin" && @password == "secret"
-		#@logfile = File.open("public/users.txt","r")
+		@logfile = File.read("public/users.txt")
+		@seclog = File.read("public/contacts.txt")
 		erb :adminList
-    	#@logfile.close
-    	#send_file 'public/users.txt'
     else
 		redirect to "/admin"
 	end
