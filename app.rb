@@ -23,6 +23,11 @@ post '/visit' do
 	@select = params[:select]
 	@color = params[:colorpicker]
 
+	if @username == ''
+		@error = 'Поле с именем не сохранено'
+		return erb :visit
+	end
+
 	f = File.open 'public/users.txt', "a"
 	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
 	f.close
