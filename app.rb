@@ -23,20 +23,15 @@ post '/visit' do
 	@select = params[:select]
 	@color = params[:colorpicker]
 
-	if @username == ''
-		@error = 'Поле с именем пусто'
-	end
+	errHash ={:username => 'Поле с именем пустое',
+		:phone => 'Поле с телефоном пустое',
+		:date_n_time => 'Поле с датой и временем пустое',}
 
-	if @phone == ''
-		@error = 'Поле с номером телефона пусто'
-	end
-
-	if @date_n_time == ''
-		@error = 'Поле с датой пусто'
-	end
-
-	if @error != ''
-		return erb :visit
+	errHash.each do |key, value|
+		if params[key] == ''
+			@error = errHash[key]
+			return erb :visit
+		end
 	end
 
 	f = File.open 'public/users.txt', "a"
