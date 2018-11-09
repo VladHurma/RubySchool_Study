@@ -4,6 +4,20 @@ require 'sinatra'
 require 'sinatra/reloader'
 require "./valid"
 
+def errCheck (page)
+
+		errHash = {:username => 'Поле с именем пустое',
+		:phone => 'Поле с телефоном пустое',
+		:date_n_time => 'Поле с датой и временем пустое'}
+
+		@error = errHash.select{|key| params[key] == ''}.values.join('|')
+
+		if @error != ''
+			return erb page
+		end
+
+end
+
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
 end
@@ -24,7 +38,7 @@ post '/visit' do
 	@select = params[:select]
 	@color = params[:colorpicker]
 
-	Valid.errCheck :visit
+	errCheck :visit
 
 	f = File.open 'public/users.txt', "a"
 	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
