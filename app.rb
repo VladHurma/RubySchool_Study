@@ -24,7 +24,18 @@ post '/visit' do
 	@color = params[:colorpicker]
 
 	if @username == ''
-		@error = 'Поле с именем не сохранено'
+		@error = 'Поле с именем пусто'
+	end
+
+	if @phone == ''
+		@error = 'Поле с номером телефона пусто'
+	end
+
+	if @date_n_time == ''
+		@error = 'Поле с датой пусто'
+	end
+
+	if @error != ''
 		return erb :visit
 	end
 
