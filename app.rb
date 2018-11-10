@@ -2,7 +2,8 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require "./valid"
+require 'pony'
+#require "./valid"
 
 def errCheck (page)
 
@@ -54,6 +55,21 @@ end
 post '/contacts' do
 	@email = params[:email]
 	@message = params[:message]
+
+	Pony.mail(:to => 'lhvshy@gmail.com',
+		:from => "My Barbershop <lhvshy@gmail.com>",
+		:subject => "Barber shop message form #{@email}",
+		:body => "#{@message}",
+		:via => :smtp,
+		:via_options => {
+			:address => 'smtp.gmail.com',
+			:port => '587',
+			:enable_starttls_auto => true,
+			:user_name => 'lhvshy@gmail.com',
+			:password => '################',
+			:authentication => :plain, 
+            :domain => "mail.google.com"}
+		)
 
 	f = File.open 'public/contacts.txt', "a"
 	f.write "Email:\n#{@email}\nСообщение:\n#{@message}\n\n\n"
