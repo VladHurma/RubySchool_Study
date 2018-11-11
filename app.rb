@@ -17,37 +17,9 @@ def errCheck(page)
 	end
 
 		@error = errHash.select{|key| params[key] == ''}.values.join('|')
-		@cheker = true
 
 		if @error != ''
-			@cheker = false
-		end
-
-		if @cheker == true && page == :visit
-			f = File.open 'public/users.txt', "a"
-			f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
-			f.close
-		elsif @cheker == false && page == :visit
-			erb :visit
-		end
-
-		if @cheker == true && page == :contacts
-			Pony.mail(:to => 'rubyhurma@gmail.com',
-			:from => "My Barbershop",
-			:subject => "Barber shop message form #{@email}",
-			:body => "#{@message}",
-			:via => :smtp,
-			:via_options => {
-				:address => 'smtp.gmail.com',
-				:port => '587',
-				:enable_starttls_auto => true,
-				:user_name => 'rubyhurma@gmail.com',
-				:password => '1098Hurma1895',
-				:authentication => :plain, 
-	            :domain => "mail.google.com"}
-			)
-		elsif @cheker == false && page == :contacts
-			erb :contacts	
+			return erb page
 		end
 
 end
@@ -73,6 +45,12 @@ post '/visit' do
 	@color = params[:colorpicker]
 
 	errCheck :visit
+
+	f = File.open 'public/users.txt', "a"
+	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
+	f.close
+
+	erb :visit
 end
 
 get '/contacts' do
@@ -82,7 +60,25 @@ end
 post '/contacts' do
 	@email = params[:email]
 	@message = params[:message]
+
 	errCheck :contacts
+
+	Pony.mail(:to => 'rubyhurma@gmail.com',
+		:from => "My Barbershop",
+		:subject => "Barber shop message form #{@email}",
+		:body => "#{@message}",
+		:via => :smtp,
+		:via_options => {
+			:address => 'smtp.gmail.com',
+			:port => '587',
+			:enable_starttls_auto => true,
+			:user_name => 'rubyhurma@gmail.com',
+			:password => '1098Hurma1895',
+			:authentication => :plain, 
+            :domain => "mail.google.com"}
+		)
+
+	erb :contacts
 end
 
 get '/admin' do
