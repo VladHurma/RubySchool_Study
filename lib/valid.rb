@@ -1,7 +1,6 @@
-=begin
 module Valid
 
-	def self.errCheck error
+	def errChoose
 
 		error = ''
 
@@ -13,11 +12,11 @@ module Valid
 
 		return error
 
-		#if @error != ''
-		#	return erb page
-		#end
-
 	end
 
+	def errCheck(error, page)
+		if error != ''
+			return erb page
+		end
+	end
 end
-=end

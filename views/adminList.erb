@@ -26,13 +26,3 @@
  		</tr>
 	</tbody>
 </table>
-
-</br></br></br>
-<h1><strong>Сообщения</strong></h1>
-<% @seclog.each_line do |line| %>
-<% if line.include? "@mail.ru" %>
-	<a href="mailto:#"><%= line %></a></br></br>
-	<% else %>
-	<strong><%= line %></strong></br>
-<% end %>
-<% end %>

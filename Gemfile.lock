@@ -1,7 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.0.1)
     mustermann (1.0.3)
+    pony (1.12)
+      mail (>= 2.0)
     rack (2.0.5)
     rack-protection (2.0.4)
       rack
@@ -17,6 +22,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  pony
   sinatra
 
 BUNDLED WITH

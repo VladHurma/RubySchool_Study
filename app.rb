@@ -3,18 +3,51 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pony'
-#require "./valid"
+#require "./lib/valid"
 
-def errCheck (page)
+def errCheck(page)
 
+	if page == :visit
 		errHash = {:username => 'Поле с именем пустое',
 		:phone => 'Поле с телефоном пустое',
 		:date_n_time => 'Поле с датой и временем пустое'}
+	elsif page == :contacts
+		errHash = {:email => 'Введите email',
+			:message => 'Поле сообщения пустое'}
+	end
 
 		@error = errHash.select{|key| params[key] == ''}.values.join('|')
+		@cheker = true
 
 		if @error != ''
-			return erb page
+			@cheker = false
+		end
+
+		if @cheker == true && page == :visit
+			f = File.open 'public/users.txt', "a"
+			f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
+			f.close
+		elsif @cheker == false && page == :visit
+			erb :visit
+		end
+
+		if @cheker == true && page == :contacts
+			Pony.mail(:to => 'rubyhurma@gmail.com',
+			:from => "My Barbershop",
+			:subject => "Barber shop message form #{@email}",
+			:body => "#{@message}",
+			:via => :smtp,
+			:via_options => {
+				:address => 'smtp.gmail.com',
+				:port => '587',
+				:enable_starttls_auto => true,
+				:user_name => 'rubyhurma@gmail.com',
+				:password => '1098Hurma1895',
+				:authentication => :plain, 
+	            :domain => "mail.google.com"}
+			)
+		elsif @cheker == false && page == :contacts
+			erb :contacts	
 		end
 
 end
@@ -40,12 +73,6 @@ post '/visit' do
 	@color = params[:colorpicker]
 
 	errCheck :visit
-
-	f = File.open 'public/users.txt', "a"
-	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
-	f.close
-
-	erb :visit
 end
 
 get '/contacts' do
@@ -55,27 +82,7 @@ end
 post '/contacts' do
 	@email = params[:email]
 	@message = params[:message]
-
-	Pony.mail(:to => 'lhvshy@gmail.com',
-		:from => "My Barbershop <lhvshy@gmail.com>",
-		:subject => "Barber shop message form #{@email}",
-		:body => "#{@message}",
-		:via => :smtp,
-		:via_options => {
-			:address => 'smtp.gmail.com',
-			:port => '587',
-			:enable_starttls_auto => true,
-			:user_name => 'lhvshy@gmail.com',
-			:password => '################',
-			:authentication => :plain, 
-            :domain => "mail.google.com"}
-		)
-
-	f = File.open 'public/contacts.txt', "a"
-	f.write "Email:\n#{@email}\nСообщение:\n#{@message}\n\n\n"
-	f.close
-
-	erb :contacts
+	errCheck :contacts
 end
 
 get '/admin' do
