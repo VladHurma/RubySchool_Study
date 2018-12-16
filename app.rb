@@ -24,6 +24,33 @@ def errCheck(page)
 
 end
 
+def get_db
+	return SQLite3::Database.new 'barber_shop.db'
+end
+
+configure do
+	db = get_db
+
+	db.execute 'CREATE TABLE IF NOT EXISTS
+		"Users"
+		(
+			"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+			"Name"	TEXT,
+			"Phone"	TEXT,
+			"Date_stamp"	TEXT,
+			"Barber"	TEXT,
+			"Color"	TEXT
+		);'
+	
+	db.execute 'CREATE TABLE IF NOT EXISTS
+		"Contacts"
+		(
+			"Id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+			"Email"	TEXT,
+			"Message"	TEXT
+		);'
+end
+
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
 end
