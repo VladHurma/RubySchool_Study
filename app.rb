@@ -40,8 +40,7 @@ post '/visit' do
 	@username = params[:username]
 	@phone = params[:phone]
 	@date_n_time = params[:date_n_time]
-	@master = params[:master]
-	@select = params[:select]
+	@master = params[:select]
 	@color = params[:colorpicker]
 
 	errCheck :visit

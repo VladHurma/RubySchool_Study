@@ -22,43 +22,16 @@
   	<input id="aaa" name="date_n_time" type="text" class="form-control" placeholder="Дата и время" value=<%=@date_n_time%>>
   </div>
 
-
-<div class="radio">
-  <label>
-    <input type="radio" name="master" value="Генадий" checked>
-    Генайдий
-  </label>
-</div>
-
-<div class="radio">
-  <label>
-    <input type="radio" name="master" value="Дмитрий">
-    Дмитрий
-  </label>
-</div>
-
-<div class="radio">
-  <label>
-    <input type="radio" name="master" value="Елена">
-    Елена
-  </label>
-</div>
-
-<div class="radio">
-  <label>
-    <input type="radio" name="master" value="Любой">
-    Любой из наших мастеров
-  </label>
-</div>
-
-
-<select class="form-control" name="select">
-    <option disabled>Выберите мастера</option>
-    <option value="Генадий">Генадий</option>
-    <option value="Дмитрий">Дмитрий</option>
-    <option value="Елена">Елена</option>
-    <option selected="Любой">Любой</option>
-   </select></p>
+  <div class="form-group">
+    <label>Выберите мастера</label>
+    <select class="form-control" name="master">
+       <option disabled>Выберите мастера</option>
+       <option <%= @master == 'Любой мастер' ? 'selected' : '' %>>Любой</option>
+       <option <%= @master == 'Генадий' ? 'selected' : '' %>>Генадий</option>
+       <option <%= @master == 'Дмитрий' ? 'selected' : '' %>>Дмитрий</option>
+       <option <%= @master == 'Елена' ? 'selected' : '' %>>Елена</option>
+    </select>  
+  </div>
 
 
 <div class="form-group">
