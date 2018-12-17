@@ -19,12 +19,12 @@
   <div class="form-group">
   	<label>Выберите дату</label>
   </br>
-  	<input id="aaa" name="date_n_time" type="text" class="form-control" placeholder="Дата и время" value=<%=@date_n_time%>>
+  	<input id="aaa" name="date_stamp" type="text" class="form-control" placeholder="Дата и время" value=<%=@date_n_time%>>
   </div>
 
   <div class="form-group">
     <label>Выберите мастера</label>
-    <select class="form-control" name="master">
+    <select class="form-control" name="barber">
        <option disabled>Выберите мастера</option>
        <option <%= @master == 'Любой мастер' ? 'selected' : '' %>>Любой</option>
        <option <%= @master == 'Генадий' ? 'selected' : '' %>>Генадий</option>

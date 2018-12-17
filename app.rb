@@ -3,9 +3,10 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pony'
+require 'sqlite3'
 #require "./lib/valid"
 
-def errCheck(page)
+def errCheck(page, block)
 
 	if page == :visit
 		errHash = {:username => 'Поле с именем пустое',
@@ -20,12 +21,14 @@ def errCheck(page)
 
 		if @error != ''
 			return erb page
+		else
+			block.call
 		end
 
 end
 
 def get_db
-	return SQLite3::Database.new 'barber_shop.db'
+	return SQLite3::Database.new 'db/barber_shop.db'
 end
 
 configure do
@@ -64,19 +67,27 @@ get '/visit' do
 end
 
 post '/visit' do	
-	@username = params[:username]
-	@phone = params[:phone]
-	@date_n_time = params[:date_n_time]
-	@master = params[:select]
-	@color = params[:colorpicker]
 
-	errCheck :visit
+	db = get_db
 
-	f = File.open 'public/users.txt', "a"
-	f.write "\nZ\n#{@username}\n#{@phone}\n#{@date_n_time}\n#{@master}\n#{@select}\n#{@color}"
-	f.close
+	block = lambda do
+		db.execute 'insert into
+		Users
+		(
+			name,
+			phone,
+			date_stamp,
+			barber,
+			color
+		)
+		values (?, ?, ?, ?, ?)', [params[:username], params[:phone],
+			params[:date_stamp], params[:barber], params[:colorpicker]]
+	
+		erb :visit
+	end
 
-	erb :visit
+	errCheck :visit, block
+
 end
 
 get '/contacts' do
@@ -84,27 +95,38 @@ get '/contacts' do
 end
 
 post '/contacts' do
-	@email = params[:email]
-	@message = params[:message]
+	
+	db = get_db
 
-	errCheck :contacts
-
-	Pony.mail(:to => 'rubyhurma@gmail.com',
-		:from => "My Barbershop",
-		:subject => "Barber shop message form #{@email}",
-		:body => "#{@message}",
-		:via => :smtp,
-		:via_options => {
-			:address => 'smtp.gmail.com',
-			:port => '587',
-			:enable_starttls_auto => true,
-			:user_name => 'rubyhurma@gmail.com',
-			:password => '1098Hurma1895',
-			:authentication => :plain, 
-            :domain => "mail.google.com"}
+	block = lambda do
+		db.execute 'insert into
+		Contacts
+		(
+			email,
+			message
 		)
+		values (?, ?)', [params[:email], params[:message]]
+	
+		Pony.mail(:to => 'rubyhurma@gmail.com',
+			:from => "My Barbershop",
+			:subject => "Barber shop message from #{params[:email]}",
+			:body => "#{params[:message]}",
+			:via => :smtp,
+			:via_options => {
+				:address => 'smtp.gmail.com',
+				:port => '587',
+				:enable_starttls_auto => true,
+				:user_name => 'rubyhurma@gmail.com',
+				:password => '1098Hurma1895',
+				:authentication => :plain, 
+	            :domain => "mail.google.com"}
+			)
 
-	erb :contacts
+		erb :contacts
+	end
+
+	errCheck :contacts, block
+
 end
 
 get '/admin' do
