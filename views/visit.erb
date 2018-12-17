@@ -19,7 +19,7 @@
   <div class="form-group">
   	<label>Выберите дату</label>
   </br>
-  	<input id="aaa" name="date_stamp" type="text" class="form-control" placeholder="Дата и время" value=<%=@date_n_time%>>
+  	<input id="datetimepicker" name="date_stamp" type="text" class="form-control" placeholder="Дата и время" value=<%=@date_n_time%>>
   </div>
 
   <div class="form-group">
@@ -60,5 +60,9 @@
 <script type="text/javascript">
 $(function () {
   $('#colorpick').simplecolorpicker();
+})
+
+$(function () {
+  $('#datetimepicker').datetimepicker();
 })
 </script>
