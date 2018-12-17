@@ -1,28 +1,23 @@
 <h1><strong>Заказы</strong></h1>
 <table class="table table-hover">
   <thead>	
-  	<tr>
-  		<th>#</th>
+    <tr>  
+      <th>#</th>
   		<th>Имя</th>
   		<th>Телефон</th>
   		<th>Дата и время</th>
   		<th>Мастер</th>
-  		<th>Подтверждаем мастера</th>
       <th>Цвет покраски волос</th>
   	</tr>
   </thead>
 
   	<tbody>
+      <% @row_with_user_info.each do |row| %>
   	<tr>
-  	<% i = 0 %>
-  		<% @logfile.each_line do |line| %>
-  			<% if line.strip == "Z" %>
-  			<% i+= 1 %>
-  			</tr></tr><th scope="row"><%= i %></th>
-  			<% else %>
-  			<td><%= line %></td>
-  			<% end %>
-		<% end %>
+        <% row.each do |element| %>
+          <td><%= element %></td>
+        <% end %>
  		</tr>
+      <% end %>
 	</tbody>
 </table>

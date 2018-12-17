@@ -15,6 +15,9 @@ def errCheck(page, block)
 	elsif page == :contacts
 		errHash = {:email => 'Введите email',
 			:message => 'Поле сообщения пустое'}
+	elsif page == :admin
+		errHash = {:login => 'Поле с логином пустое',
+			:password => 'Введите пароль'}	
 	end
 
 		@error = errHash.select{|key| params[key] == ''}.values.join('|')
@@ -56,6 +59,35 @@ end
 
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+end
+
+get '/admin' do
+	erb :admin
+end
+
+post '/admin' do
+
+	db = get_db
+
+	#db.results_as_hash = true --One day that'save your live
+
+	block = lambda do
+
+		if params[:login] == "admin" && params[:password] == "secret"
+			@row_with_user_info = []
+			db.execute 'select * from Users order by id desc' do |row|
+				@row_with_user_info << row
+			end
+
+			erb :list_for_admin
+	    else
+			redirect to "/admin"
+		end
+
+	end
+
+	errCheck :admin, block
+
 end
 
 get '/about' do
@@ -127,22 +159,4 @@ post '/contacts' do
 
 	errCheck :contacts, block
 
-end
-
-get '/admin' do
-	erb :admin
-end
-
-post '/admin' do
-	@login = params[:login]
-	@password = params[:password]
-
-	if @login == "admin" && @password == "secret"
-		@logfile = File.read("public/users.txt")
-		@seclog = File.read("public/contacts.txt")
-		erb :adminList
-    else
-		redirect to "/admin"
-	end
-			
 end
