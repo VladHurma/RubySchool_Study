@@ -22,30 +22,15 @@
   	<input id="datetimepicker" name="date_stamp" type="text" class="form-control" placeholder="Дата и время" value=<%=@date_n_time%>>
   </div>
 
-
-
-
-
-
-
   <div class="form-group">
     <label>Выберите мастера</label>
     <select class="form-control" name="barber">
-       <option disabled>Выберите мастера</option>
-
-       <option <%= @barber == 'Любой мастер' ? 'selected' : '' %>>Любой</option>
-
+        <option selected>Выбери барбера</option>
+        <% @barbers.each do |item| %>
+          <option <%= @barber == item[1] ? 'selected' : '' %>><%= item[1] %></option>
+        <% end %>
     </select>  
   </div>
-
-
-
-
-
-
-
-
-
 
 <div class="form-group">
    <label>Выберете цвет</label></br>

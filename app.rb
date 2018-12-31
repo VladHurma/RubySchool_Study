@@ -45,6 +45,11 @@ def get_db
   SQLite3::Database.new 'db/barber_shop.db'
 end
 
+before do
+  db = get_db
+  @barbers = db.execute 'select * from Barbers'
+end
+
 configure do
   db = get_db
 
@@ -72,7 +77,7 @@ configure do
 		"Id"	INTEGER PRIMARY KEY AUTOINCREMENT,
 		"Name"	TEXT UNIQUE
 	);'
-	
+
   seed_db db, ['Henry', 'Jhon', 'Walter', 'Jessie']
 end
 
@@ -114,7 +119,6 @@ get '/visit' do
 end
 
 post '/visit' do
-  @barber = params[:barber]
 
   db = get_db
 
