@@ -135,7 +135,7 @@ post '/visit' do
 		values (?, ?, ?, ?, ?)', [params[:username], params[:phone],
                             params[:date_stamp], params[:barber], params[:colorpicker]]
 
-    erb :visit
+    erb "<h1>Вы успешно записались! Спасибо что пользуетесь нашими услугами!</h1>"
   end
 
   errCheck :visit, block

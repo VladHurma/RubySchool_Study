@@ -15,8 +15,12 @@
     <% @row_with_user_info.each do |row| %>
     	<tr>
         <% row.each do |element| %>
-          <td><%= element %></td>
-        <% end %>
+          <% if row.last != element %>
+            <td><%= element %></td>
+          <% else %>
+            <td style="background-color: <%= element %>"><%=   element %></td>
+          <% end %>
+          <% end %>
    		</tr>
     <% end %>
 	</tbody>
