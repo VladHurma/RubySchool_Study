@@ -11,13 +11,13 @@
   	</tr>
   </thead>
 
-  	<tbody>
-      <% @row_with_user_info.each do |row| %>
-  	<tr>
+  <tbody>
+    <% @row_with_user_info.each do |row| %>
+    	<tr>
         <% row.each do |element| %>
           <td><%= element %></td>
         <% end %>
- 		</tr>
-      <% end %>
+   		</tr>
+    <% end %>
 	</tbody>
 </table>
